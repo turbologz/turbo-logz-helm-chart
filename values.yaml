@@ -1,0 +1,5 @@
+environment: dev
+
+kafkaManager:
+  username: admin
+  password: admin

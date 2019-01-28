@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ template "kafka.fullname" . }}-config
+  labels:
+    app: {{ template "kafka.fullname" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ template "kafka.fullname" . }}
+        release: {{ .Release.Name }}
+    spec:
+      restartPolicy: OnFailure
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ template "kafka.fullname" . }}-config
+            defaultMode: 0744
+      containers:
+        - name: {{ template "kafka.fullname" . }}-config
+          image: confluentinc/cp-kafka:5.0.1
+          command: ["/usr/local/script/runtimeConfig.sh"]
+          volumeMounts:
+            - name: config-volume
+              mountPath: "/usr/local/script"
