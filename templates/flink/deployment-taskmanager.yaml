@@ -1,0 +1,47 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "flink.fullname" . }}-taskmanager
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ template "flink.fullname" . }}
+        component: taskmanager
+    spec:
+      containers:
+        - name: taskmanager
+          image: flink:latest
+          imagePullPolicy: Always
+          args:
+            - taskmanager
+          ports:
+            - name: data
+              containerPort: 6121
+            - name: rpc
+              containerPort: 6122
+            - name: query
+              containerPort: 6125
+          env:
+            - name: FLINK_CONF_DIR
+              value: /etc/flink
+          resources:
+            limits:
+              cpu: 1
+              memory: 1280Mi
+            requests:
+              cpu: 1
+              memory: 1280Mi
+          volumeMounts:
+            - name: {{ template "flink.fullname" . }}-flink-config
+              mountPath: /etc/flink
+            - name: {{ template "flink.fullname" . }}-hadoop-config
+              mountPath: /etc/hadoop/conf
+      volumes:
+        - name: {{ template "flink.fullname" . }}-flink-config
+          configMap:
+            name: {{ template "flink.fullname" . }}-flink-config
+        - name: {{ template "flink.fullname" . }}-hadoop-config
+          configMap:
+            name: {{ template "flink.fullname" . }}-hadoop-config
