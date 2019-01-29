@@ -1,0 +1,53 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "flink.fullname" . }}-jobmanager
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: {{ template "flink.fullname" . }}
+        component: jobmanager
+    spec:
+      containers:
+        - name: jobmanager
+          image: flink:latest
+          imagePullPolicy: Always
+          args:
+            - jobmanager
+          ports:
+            - containerPort: 6123
+              name: rpc
+            - containerPort: 6124
+              name: blob
+            - containerPort: 8081
+              name: ui
+          env:
+            - name: FLINK_CONF_DIR
+              value: /etc/flink
+          livenessProbe:
+            httpGet:
+              path: /overview
+              port: 8081
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1280Mi
+            requests:
+              cpu: 500m
+              memory: 1280Mi
+          volumeMounts:
+            - name: {{ template "flink.fullname" . }}-flink-config
+              mountPath: /etc/flink
+            - name: {{ template "flink.fullname" . }}-hadoop-config
+              mountPath: /etc/hadoop/conf
+      volumes:
+        - name: {{ template "flink.fullname" . }}-flink-config
+          configMap:
+            name: {{ template "flink.fullname" . }}-flink-config
+        - name: {{ template "flink.fullname" . }}-hadoop-config
+          configMap:
+            name: {{ template "flink.fullname" . }}-hadoop-config

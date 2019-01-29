@@ -2,7 +2,7 @@
 
 minikube delete
 
-minikube config set cpus 4
+minikube config set cpus 5
 minikube config set memory 8192
 
 minikube start --cpus 4 --memory 8192 --vm-driver=kvm2
