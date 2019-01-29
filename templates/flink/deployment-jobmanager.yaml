@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ template "flink.fullname" . }}-jobmanager
 spec:
-  replicas: 1
+  replicas: 2
   template:
     metadata:
       labels:
@@ -34,10 +34,10 @@ spec:
             periodSeconds: 10
           resources:
             limits:
-              cpu: 1000m
+              cpu: 500m
               memory: 1280Mi
             requests:
-              cpu: 1000m
+              cpu: 500m
               memory: 1280Mi
           volumeMounts:
             - name: {{ template "flink.fullname" . }}-flink-config
