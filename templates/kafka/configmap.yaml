@@ -23,4 +23,4 @@ data:
       sleep 20
     done
 
-    kafka-topics --zookeeper {{ template "zookeeper.fullname" . }} --create --if-not-exists --force --topic unicron-tasks-log --partitions 1 --replication-factor 1
+    kafka-topics --zookeeper {{ template "zookeeper.fullname" . }} --create --if-not-exists --force --topic log-analysis --partitions 1 --replication-factor 1
