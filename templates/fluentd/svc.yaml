@@ -1,0 +1,18 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ template "fluent.fullname" . }}
+  labels:
+    app: {{ template "fluent.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  type: NodePort
+  selector:
+    k8s-app: {{ template "fluent.fullname" . }}
+  ports:
+    - name: {{ template "fluent.fullname" . }}
+      protocol: TCP
+      port: 5140
+      targetPort: 5140

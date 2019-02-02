@@ -1,20 +1,21 @@
 apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
-  name: fluent
+  name: {{ template "fluent.fullname" . }}
   namespace: default
   labels:
-    k8s-app: fluent
+    k8s-app: {{ template "fluent.fullname" . }}
     version: v1
     kubernetes.io/cluster-service: "true"
 spec:
   template:
     metadata:
       labels:
-        k8s-app: fluent
+        k8s-app: {{ template "fluent.fullname" . }}
         version: v1
         kubernetes.io/cluster-service: "true"
     spec:
+      hostNetwork: true
       tolerations:
         - key: node-role.kubernetes.io/master
           effect: NoSchedule
@@ -41,7 +42,7 @@ spec:
             path: /var/lib/docker/containers
         - name: fluent-config
           configMap:
-            name: fluent
+            name: {{ template "fluent.fullname" . }}
             items:
               - key: fluent_conf
                 path: fluent.conf

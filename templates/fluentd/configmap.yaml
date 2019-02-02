@@ -1,14 +1,22 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: fluent
+  name: {{ template "fluent.fullname" . }}
   namespace: default
 data:
   fluent_conf: |
-    @include kubernetes.conf
+    <source>
+      @type syslog
+      @log_level debug
+      port 5140
+      bind 0.0.0.0
+      protocol_type tcp
+      tag system.local
+    </source>
 
-    <match **flink***>
+    <match **>
       @type kafka_buffered
+      @log_level debug
 
       brokers             {{ include "kafka.fullname" . }}:9092
 
