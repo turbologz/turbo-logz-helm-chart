@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
         - name: jobmanager
-          image: flink:latest
+          image: flink:1.5
           imagePullPolicy: Always
           args:
             - jobmanager
@@ -34,11 +34,11 @@ spec:
             periodSeconds: 10
           resources:
             limits:
-              cpu: 500m
-              memory: 1280Mi
+              cpu: 200m
+              memory: 650Mi
             requests:
-              cpu: 500m
-              memory: 1280Mi
+              cpu: 200m
+              memory: 650Mi
           volumeMounts:
             - name: {{ template "flink.fullname" . }}-flink-config
               mountPath: /etc/flink

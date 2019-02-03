@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "gateway.fullname" . }}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - http:
+        port: 5140
+        paths:
+          - path: /
+            backend:
+              serviceName: {{ template "fluent.fullname" . }}
+              servicePort: 5140

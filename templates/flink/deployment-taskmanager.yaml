@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
         - name: taskmanager
-          image: flink:latest
+          image: flink:1.5
           imagePullPolicy: Always
           args:
             - taskmanager
@@ -28,11 +28,11 @@ spec:
               value: /etc/flink
           resources:
             limits:
-              cpu: 500m
-              memory: 1280Mi
+              cpu: 200m
+              memory: 650Mi
             requests:
-              cpu: 500m
-              memory: 1280Mi
+              cpu: 200m
+              memory: 650Mi
           volumeMounts:
             - name: {{ template "flink.fullname" . }}-flink-config
               mountPath: /etc/flink

@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "fluent.fullname" . }}
+  namespace: default
+data:
+  fluent_conf: |
+    <source>
+      @type syslog
+      @log_level debug
+      port 5140
+      bind 0.0.0.0
+      protocol_type tcp
+      tag system.local
+    </source>
+
+    <match **>
+      @type kafka_buffered
+      @log_level debug
+
+      brokers             {{ include "kafka.fullname" . }}:9092
+
+      topic_key             log-analysis
+      default_topic         log-analysis
+      output_data_type      json
+      output_include_tag    true
+      output_include_time   true
+      get_kafka_client_log  false
+      flush_interval        1s
+
+      required_acks         1
+      compression_codec     gzip
+    </match>
