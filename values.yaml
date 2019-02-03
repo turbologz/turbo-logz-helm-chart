@@ -1,5 +1,10 @@
 environment: dev
 
+turboLogzUserApi: turbologz/turbo-logz-user-api:6
+
+serviceType: ClusterIP
+ImagePullPolicy: Always
+
 kafkaManager:
   username: admin
   password: admin
