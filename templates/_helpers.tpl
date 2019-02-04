@@ -11,6 +11,10 @@
 {{- printf "%s-turbo-logz-graphql" .Release.Name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+{{- define "turbo-logz-ui.fullname" -}}
+{{- printf "%s-turbo-logz-ui" .Release.Name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
 
 ###############################################################################################
 #

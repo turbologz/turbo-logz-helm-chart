@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "turbo-logz-ui.fullname" . }}
+  labels:
+    app: {{ template "turbo-logz-ui.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ template "turbo-logz-ui.fullname" . }}
+    spec:
+      containers:
+        - name: {{ template "turbo-logz-ui.fullname" . }}
+          image: "{{ .Values.turboLogzUi }}"
+          imagePullPolicy: {{ default "" .Values.imagePullPolicy | quote }}
+          ports:
+            - containerPort: 80
+          env:
+            - name: PORT
+              value: "80"
+          resources:
+            requests:
+              memory: 80Mi
+              cpu: 10m

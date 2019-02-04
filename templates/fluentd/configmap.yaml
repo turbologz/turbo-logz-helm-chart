@@ -18,7 +18,7 @@ data:
       @type kafka_buffered
       @log_level debug
 
-      brokers             {{ include "kafka.fullname" . }}:9092
+      brokers               {{ include "kafka.fullname" . }}:9092
 
       topic_key             log-analysis
       default_topic         log-analysis
@@ -26,7 +26,8 @@ data:
       output_include_tag    true
       output_include_time   true
       get_kafka_client_log  false
-      flush_interval        1s
+      flush_interval        5s
+      disable_retry_limit   true
 
       required_acks         1
       compression_codec     gzip

@@ -12,7 +12,11 @@ spec:
             backend:
               serviceName: {{ template "turbo-logz-graphql.fullname" . }}
               servicePort: 3000
-          - path: /*
+          - path: /graphql
             backend:
               serviceName: {{ template "turbo-logz-graphql.fullname" . }}
-              servicePort: 3000
+              servicePort: 80
+          - path: /*
+            backend:
+              serviceName: {{ template "turbo-logz-ui.fullname" . }}
+              servicePort: 80
