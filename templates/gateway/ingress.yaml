@@ -7,9 +7,12 @@ metadata:
 spec:
   rules:
     - http:
-        port: 5140
         paths:
-          - path: /
+          - path: /subscriptions
             backend:
-              serviceName: {{ template "fluent.fullname" . }}
-              servicePort: 5140
+              serviceName: {{ template "turbo-logz-graphql.fullname" . }}
+              servicePort: 3000
+          - path: /*
+            backend:
+              serviceName: {{ template "turbo-logz-graphql.fullname" . }}
+              servicePort: 3000

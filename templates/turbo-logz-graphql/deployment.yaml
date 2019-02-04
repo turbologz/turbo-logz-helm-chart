@@ -1,0 +1,44 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "turbo-logz-graphql.fullname" . }}
+  labels:
+    app: {{ template "turbo-logz-graphql.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ template "turbo-logz-graphql.fullname" . }}
+    spec:
+      imagePullSecrets:
+        - name: myregistrykey
+      containers:
+        - name: {{ template "turbo-logz-graphql.fullname" . }}
+          image: "{{ .Values.turboLogzGraphql }}"
+          imagePullPolicy: {{ default "" .Values.imagePullPolicy | quote }}
+          ports:
+            - containerPort: 80
+            - containerPort: 3000
+          env:
+            - name: LOG_LEVEL
+              value: debug
+            - name: PORT
+              value: "80"
+            - name: WS_PORT
+              value: "3000"
+            - name: USER_API
+              value: http://{{ template "turbo-logz-user-api.fullname" . }}
+            - name: KAFKA_HOST
+              value: {{ include "kafka.fullname" . }}:9092
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: turbo-logz-jwt-secret
+                  key: JWT_SECRET
+          resources:
+            requests:
+              memory: 80Mi
+              cpu: 10m
