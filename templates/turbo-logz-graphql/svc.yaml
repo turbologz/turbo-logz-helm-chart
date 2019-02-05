@@ -8,7 +8,7 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 spec:
-  sessionAffinity: ClientIP
+  type: NodePort
   ports:
     - name: {{ template "turbo-logz-graphql.fullname" . }}
       port: 80

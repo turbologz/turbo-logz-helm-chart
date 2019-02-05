@@ -8,6 +8,7 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 spec:
+  type: NodePort
   ports:
     - name: {{ template "turbo-logz-ui.fullname" . }}
       port: 80
