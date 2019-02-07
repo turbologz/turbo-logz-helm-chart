@@ -16,7 +16,7 @@ spec:
         k8s-app: {{ template "fluent.fullname" . }}
     spec:
       containers:
-        - name: {{ template "turbo-logz-user-api.fullname" . }}-test
+        - name: {{ template "turbo-logz-user-api.fullname" . }}
           image: fluent/fluentd-kubernetes-daemonset:v1.1.3-debian-elasticsearch
           imagePullPolicy: {{ default "" .Values.imagePullPolicy | quote }}
           command: ["/bin/sh"]
