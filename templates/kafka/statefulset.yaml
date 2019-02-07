@@ -16,7 +16,11 @@ spec:
   podManagementPolicy: OrderedReady
   updateStrategy:
     type: "OnDelete"
+  {{ if eq .Values.environment "dev" }}
+  replicas: 2
+  {{ else }}
   replicas: 3
+  {{ end }}
   template:
     metadata:
       annotations: {}

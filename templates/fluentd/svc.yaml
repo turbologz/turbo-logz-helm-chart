@@ -8,11 +8,11 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
-    k8s-app: {{ template "fluent.fullname" . }}
+    app: {{ template "fluent.fullname" . }}
   ports:
-    - name: {{ template "fluent.fullname" . }}
+    - name: syslog
       protocol: TCP
       port: 5140
-      targetPort: 5140
+      targetPort: syslog
