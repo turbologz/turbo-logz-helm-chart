@@ -1,48 +1,29 @@
 apiVersion: extensions/v1beta1
-kind: DaemonSet
+kind: Deployment
 metadata:
   name: {{ template "fluent.fullname" . }}
-  namespace: default
   labels:
-    k8s-app: {{ template "fluent.fullname" . }}
-    version: v1
-    kubernetes.io/cluster-service: "true"
+    app: {{ template "fluent.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
 spec:
+  type: NodePort
   template:
     metadata:
       labels:
+        app: {{ template "fluent.fullname" . }}
         k8s-app: {{ template "fluent.fullname" . }}
-        version: v1
-        kubernetes.io/cluster-service: "true"
     spec:
-      replicas: 1
-      hostNetwork: true
-      tolerations:
-        - key: node-role.kubernetes.io/master
-          effect: NoSchedule
       containers:
-        - name: fluentd
+        - name: {{ template "turbo-logz-user-api.fullname" . }}
           image: fluent/fluentd-kubernetes-daemonset:v1.1.3-debian-elasticsearch
+          imagePullPolicy: {{ default "" .Values.imagePullPolicy | quote }}
           command: ["/bin/sh"]
           args: ["-c", "gem install fluent-plugin-kafka && cp /fluent-config/fluent.conf /fluentd/etc/ && /fluentd/entrypoint.sh"]
-          livenessProbe:
-            initialDelaySeconds: 20
-            periodSeconds: 10
-            exec:
-              command:
-                - '/bin/sh'
-                - '-c'
-                - >
-                  exit 0
-          readinessProbe:
-            initialDelaySeconds: 20
-            periodSeconds: 10
-            exec:
-              command:
-                - '/bin/sh'
-                - '-c'
-                - >
-                  exit 0
+          ports:
+            - name: syslog
+              containerPort: 5140
           volumeMounts:
             - name: varlog
               mountPath: /var/log
@@ -51,7 +32,10 @@ spec:
               readOnly: true
             - name: fluent-config
               mountPath: /fluent-config
-      terminationGracePeriodSeconds: 30
+          resources:
+            requests:
+              memory: 120Mi
+              cpu: 10m
       volumes:
         - name: varlog
           hostPath:

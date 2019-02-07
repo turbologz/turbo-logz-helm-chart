@@ -1,0 +1,2 @@
+cf create-user-provided-service turbo-logz -l syslog://35.184.20.75:5140
+cf bind-service spring-music turbo-logz

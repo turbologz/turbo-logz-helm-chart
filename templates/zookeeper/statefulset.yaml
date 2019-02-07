@@ -10,7 +10,11 @@ metadata:
     component: server
 spec:
   serviceName: {{ template "zookeeper.fullname" . }}-headless
+  {{ if eq .Values.environment "dev" }}
+  replicas: 2
+  {{ else }}
   replicas: 3
+  {{ end }}
   selector:
     matchLabels:
       app: {{ template "zookeeper.name" . }}
