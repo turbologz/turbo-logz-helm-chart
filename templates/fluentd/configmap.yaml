@@ -7,21 +7,16 @@ data:
   fluent_conf: |
     <source>
       @type syslog
-      @log_level debug
+      @log_level trace
       port 5140
       bind 0.0.0.0
       protocol_type tcp
-      tag system.local
+      tag cf.app
 
-      source_hostname_key "hostsource"
-      priority_key "priority"
-      facility_key "facilityLevel"
+      frame_type octet_count
 
-      # Messages from Cloud Foundry are in format - rfc5424
       <parse>
-          @type regexp
-          expression /<(?<pri>[0-9]{1,5})\>1 (?<time>[^ ]+) (?<host>[^ ]+) (?<ident>[^ ]+) (?<msgid>[^ ]+) (?<extradata>(\[(.*)\]|-)) (?<message>.+)$\z/
-          time_key time
+        message_format rfc5424
       </parse>
     </source>
 
