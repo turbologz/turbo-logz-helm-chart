@@ -3,7 +3,11 @@ kind: Deployment
 metadata:
   name: {{ template "flink.fullname" . }}-jobmanager
 spec:
+  {{ if eq .Values.environment "dev" }}
   replicas: 1
+  {{ else }}
+  replicas: 4
+  {{ end }}
   template:
     metadata:
       labels:
