@@ -71,3 +71,13 @@
 {{- define "flink.fullname" -}}
 {{- printf "%s-flink" .Release.Name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
+###############################################################################################
+#
+#    Cassandra
+#
+###############################################################################################
+
+{{- define "cassandra.fullname" -}}
+{{- printf "%s-cassandra" .Release.Name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
