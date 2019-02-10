@@ -19,15 +19,8 @@
 {{- printf "%s-turbo-logz-ui" .Release.Name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-
-###############################################################################################
-#
-#    Services
-#
-###############################################################################################
-
-{{- define "gateway.fullname" -}}
-{{- printf "%s-gateway" .Release.Name | trunc 63 | trimSuffix "-" -}}
+{{- define "turbo-logz-gateway.fullname" -}}
+{{- printf "%s-turbo-logz-gateway" .Release.Name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 ###############################################################################################

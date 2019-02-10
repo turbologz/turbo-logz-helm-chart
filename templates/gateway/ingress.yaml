@@ -1,21 +1,14 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ template "gateway.fullname" . }}
+  name: {{ template "turbo-logz-gateway.fullname" . }}
   annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
     - http:
         paths:
-          - path: /subscriptions
+          - path: /*
             backend:
-              serviceName: {{ template "turbo-logz-graphql.fullname" . }}
-              servicePort: 3000
-          - path: /graphql
-            backend:
-              serviceName: {{ template "turbo-logz-graphql.fullname" . }}
-              servicePort: 80
-          - path: /
-            backend:
-              serviceName: {{ template "turbo-logz-ui.fullname" . }}
+              serviceName: {{ template "turbo-logz-gateway.fullname" . }}
               servicePort: 80

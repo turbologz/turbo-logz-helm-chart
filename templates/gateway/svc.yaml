@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "turbo-logz-gateway.fullname" . }}
+  labels:
+    app: {{ template "turbo-logz-gateway.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  type: NodePort
+  sessionAffinity: ClientIP
+  ports:
+    - name: {{ template "turbo-logz-gateway.fullname" . }}
+      port: 80
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: {{ template "turbo-logz-gateway.fullname" . }}

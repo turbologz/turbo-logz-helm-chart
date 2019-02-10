@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "turbo-logz-gateway.fullname" . }}
+  labels:
+    app: {{ template "turbo-logz-gateway.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ template "turbo-logz-gateway.fullname" . }}
+    spec:
+      imagePullSecrets:
+        - name: myregistrykey
+      containers:
+        - name: {{ template "turbo-logz-gateway.fullname" . }}
+          image: "{{ .Values.turboLogzGateway }}"
+          imagePullPolicy: {{ default "" .Values.imagePullPolicy | quote }}
+          ports:
+            - containerPort: 8080
+          env:
+            - name: LOG_LEVEL
+              value: debug
+            - name: USER_API
+              value: http://{{ template "turbo-logz-user-api.fullname" . }}
+            - name: GRAPHQL
+              value: http://{{ template "turbo-logz-graphql.fullname" . }}
+            - name: GRAPHQL_WS
+              value: http://{{ template "turbo-logz-graphql.fullname" . }}:3000
+            - name: UI_URL
+              value: http://{{ template "turbo-logz-ui.fullname" . }}
+          resources:
+            requests:
+              memory: 80Mi
+              cpu: 10m

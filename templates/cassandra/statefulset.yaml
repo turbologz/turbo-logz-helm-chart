@@ -6,7 +6,11 @@ metadata:
     app: {{ template "cassandra.fullname" . }}
 spec:
   serviceName: {{ template "cassandra.fullname" . }}
+  {{ if eq .Values.environment "dev" }}
   replicas: 2
+  {{ else }}
+  replicas: 3
+  {{ end }}
   selector:
     matchLabels:
       app: {{ template "cassandra.fullname" . }}
@@ -86,15 +90,7 @@ spec:
         name: cassandra-data
       spec:
         accessModes: [ "ReadWriteOnce" ]
-        storageClassName: fast
+        storageClassName: standard
         resources:
           requests:
             storage: 1Gi
----
-kind: StorageClass
-apiVersion: storage.k8s.io/v1
-metadata:
-  name: fast
-provisioner: k8s.io/minikube-hostpath
-parameters:
-  type: pd-ssd

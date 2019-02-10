@@ -2,8 +2,9 @@ environment: dev
 
 turboLogzUserApi: turbologz/turbo-logz-user-api:6
 turboLogzApplicationsApi: turbologz/turbo-logz-applications-api:13
-turboLogzGraphql: turbologz/turbo-logz-graphql:6
-turboLogzUi: turbologz/turbo-logz-ui:2
+turboLogzGraphql: turbologz/turbo-logz-graphql:9
+turboLogzUi: turbologz/turbo-logz-ui:3
+turboLogzGateway: turbologz/turbo-logz-gateway:1
 
 serviceType: ClusterIP
 ImagePullPolicy: Always

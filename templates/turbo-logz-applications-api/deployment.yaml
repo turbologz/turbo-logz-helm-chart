@@ -13,8 +13,6 @@ spec:
       labels:
         app: {{ template "turbo-logz-applications-api.fullname" . }}
     spec:
-      imagePullSecrets:
-        - name: myregistrykey
       containers:
         - name: {{ template "turbo-logz-applications-api.fullname" . }}
           image: "{{ .Values.turboLogzApplicationsApi }}"

@@ -19,7 +19,7 @@ spec:
   {{ if eq .Values.environment "dev" }}
   replicas: 2
   {{ else }}
-  replicas: 5
+  replicas: 4
   {{ end }}
   template:
     metadata:
