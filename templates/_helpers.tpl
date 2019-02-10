@@ -7,6 +7,10 @@
 {{- printf "%s-turbo-logz-user-api" .Release.Name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+{{- define "turbo-logz-applications-api.fullname" -}}
+{{- printf "%s-turbo-logz-applications-api" .Release.Name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
 {{- define "turbo-logz-graphql.fullname" -}}
 {{- printf "%s-turbo-logz-graphql" .Release.Name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}

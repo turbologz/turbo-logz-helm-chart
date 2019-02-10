@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "turbo-logz-applications-api.fullname" . }}
+  labels:
+    app: {{ template "turbo-logz-applications-api.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ template "turbo-logz-applications-api.fullname" . }}
+    spec:
+      imagePullSecrets:
+        - name: myregistrykey
+      containers:
+        - name: {{ template "turbo-logz-applications-api.fullname" . }}
+          image: "{{ .Values.turboLogzApplicationsApi }}"
+          imagePullPolicy: {{ default "" .Values.imagePullPolicy | quote }}
+          ports:
+            - containerPort: 80
+          env:
+            - name: PORT
+              value: "80"
+            - name: HOST
+              value: "0.0.0.0"
+            - name: CASSANDRA_HOST
+              value: {{ template "cassandra.fullname" . }}
+            - name: CASSANDRA_USERNAME
+              value: cassandra
+            - name: CASSANDRA_PASSWORD
+              value: cassandra
+          resources:
+            requests:
+              memory: 80Mi
+              cpu: 10m

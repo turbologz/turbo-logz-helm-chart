@@ -1,6 +1,7 @@
 environment: dev
 
 turboLogzUserApi: turbologz/turbo-logz-user-api:6
+turboLogzApplicationsApi: turbologz/turbo-logz-applications-api:13
 turboLogzGraphql: turbologz/turbo-logz-graphql:3
 turboLogzUi: turbologz/turbo-logz-ui:2
 

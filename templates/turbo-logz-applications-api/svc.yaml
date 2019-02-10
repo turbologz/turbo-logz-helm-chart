@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "turbo-logz-applications-api.fullname" . }}
+  labels:
+    app: {{ template "turbo-logz-applications-api.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  ports:
+    - name: {{ template "turbo-logz-applications-api.fullname" . }}
+      port: 80
+      targetPort: 80
+  selector:
+    app: {{ template "turbo-logz-applications-api.fullname" . }}
