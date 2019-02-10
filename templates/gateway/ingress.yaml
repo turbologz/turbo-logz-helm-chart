@@ -1,9 +1,8 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ template "gateway.fullname" . }}-syslog
+  name: {{ template "gateway.fullname" . }}
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
     - http:
@@ -16,7 +15,7 @@ spec:
             backend:
               serviceName: {{ template "turbo-logz-graphql.fullname" . }}
               servicePort: 80
-          - path: /*
+          - path: /
             backend:
               serviceName: {{ template "turbo-logz-ui.fullname" . }}
               servicePort: 80
