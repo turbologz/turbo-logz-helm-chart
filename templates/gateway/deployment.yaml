@@ -20,15 +20,13 @@ spec:
           image: "{{ .Values.turboLogzGateway }}"
           imagePullPolicy: {{ default "" .Values.imagePullPolicy | quote }}
           ports:
-            - containerPort: 8080
+            - containerPort: 80
           env:
             - name: LOG_LEVEL
               value: debug
-            - name: USER_API
-              value: http://{{ template "turbo-logz-user-api.fullname" . }}
-            - name: GRAPHQL
+            - name: GRAPHQL_URL
               value: http://{{ template "turbo-logz-graphql.fullname" . }}
-            - name: GRAPHQL_WS
+            - name: WS_URL
               value: http://{{ template "turbo-logz-graphql.fullname" . }}:3000
             - name: UI_URL
               value: http://{{ template "turbo-logz-ui.fullname" . }}
