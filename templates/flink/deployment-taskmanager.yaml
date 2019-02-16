@@ -6,7 +6,7 @@ spec:
   {{ if eq .Values.environment "dev" }}
   replicas: 1
   {{ else }}
-  replicas: 4
+  replicas: 6
   {{ end }}
   template:
     metadata:

@@ -31,7 +31,7 @@ spec:
             - name: UI_URL
               value: http://{{ template "turbo-logz-ui.fullname" . }}
             - name: FLINK_URL
-              value: http://{{ template "flink.fullname" . }}-jobmanager:8081
+              value: http://{{ template "flink.fullname" . }}-jobmanager:8081/
           resources:
             requests:
               memory: 80Mi
