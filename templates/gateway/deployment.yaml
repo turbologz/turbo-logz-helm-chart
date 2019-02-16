@@ -27,9 +27,11 @@ spec:
             - name: GRAPHQL_URL
               value: http://{{ template "turbo-logz-graphql.fullname" . }}
             - name: WS_URL
-              value: http://{{ template "turbo-logz-graphql.fullname" . }}:3000
+              value: http://{{ template "turbo-logz-graphql.fullname" . }}:3000/
             - name: UI_URL
               value: http://{{ template "turbo-logz-ui.fullname" . }}
+            - name: FLINK_URL
+              value: http://{{ template "flink.fullname" . }}-jobmanager:8081
           resources:
             requests:
               memory: 80Mi
