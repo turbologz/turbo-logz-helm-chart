@@ -31,6 +31,8 @@ spec:
               value: "3000"
             - name: USER_API
               value: http://{{ template "turbo-logz-user-api.fullname" . }}
+            - name: APPLICATIONS_API
+              value: http://{{ template "turbo-logz-applications-api.fullname" . }}
             - name: KAFKA_HOST
               value: {{ include "kafka.fullname" . }}:9092
             - name: JWT_SECRET
