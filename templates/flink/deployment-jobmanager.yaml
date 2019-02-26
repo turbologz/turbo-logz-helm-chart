@@ -38,11 +38,11 @@ spec:
             periodSeconds: 10
           resources:
             limits:
-              cpu: 100m
-              memory: 650Mi
+              cpu: 200m
+              memory: 850Mi
             requests:
-              cpu: 100m
-              memory: 650Mi
+              cpu: 200m
+              memory: 850Mi
           volumeMounts:
             - name: {{ template "flink.fullname" . }}-flink-config
               mountPath: /etc/flink
