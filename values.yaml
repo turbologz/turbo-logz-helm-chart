@@ -3,7 +3,7 @@ environment: dev
 turboLogzUserApi: turbologz/turbo-logz-user-api:6
 turboLogzApplicationsApi: turbologz/turbo-logz-applications-api:16
 turboLogzGraphql: turbologz/turbo-logz-graphql:12
-turboLogzUi: turbologz/turbo-logz-ui:17
+turboLogzUi: turbologz/turbo-logz-ui:26
 turboLogzGateway: turbologz/turbo-logz-gateway:10
 
 serviceType: ClusterIP
